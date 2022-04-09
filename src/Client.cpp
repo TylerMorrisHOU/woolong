@@ -1,9 +1,16 @@
 #include "Client.h"
 
 #include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
-Client::Client(int id, string firstName, string lastName) : Person(id, firstName, lastName) {
+vector<Client> Client::GetAll() {
+    return clients;
+}
 
+Client Client::Get(int id) {
+    auto result = client_index.find(id);
+    return clients.at(result->second);
 }

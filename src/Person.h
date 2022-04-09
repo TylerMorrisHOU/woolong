@@ -7,17 +7,63 @@ using namespace std;
 
 class Person {
     protected:
-        int ID;
+        int id;
         string firstName;
         string lastName;
-    public:
-        Person(int id, string firstName, string lastName);
         string streetAddress1;
         string streetAddress2;
         string city;
         string state;
         string zipCode;
+    public:
+        //Constructor
+        Person(int id, string firstName, string lastName,
+        string streetAddress1, string streetAddress2,
+        string city, string state, string zipCode);
         virtual string getType() = 0;
+        //Setters
+        void setFirstName(string fn) {
+            firstName = fn;
+        }
+        void setLastName(string ln) {
+            lastName = ln;
+        }
+        void setStreetAddress(string sa1, string sa2 = "") {
+            streetAddress1 = sa1;
+            if(!sa2.empty()) {
+                streetAddress2 = sa2;
+            }
+        }
+        void setCity(string c) {
+            city = c;
+        }
+        void setState(string s) {
+            state = s;
+        }
+        void setZipCode(string zc) {
+            zipCode = zc;
+        }
+        //Getters
+        string getFirstName() {
+            return firstName;
+        }
+        string getLastName() {
+            return lastName;
+        }
+        string getFullName() {
+            return firstName + " " + lastName;
+        }
+        string getFullAddress() {
+            string tempAddress = "";
+            if(!streetAddress2.empty()) {
+                tempAddress = streetAddress2 + "/n";
+            }
+            return streetAddress1 + "/n" + tempAddress
+            + city + ", " + state + " " + zipCode;
+        }
+        string getShortAddress() {
+            return city + ", " + state;
+        }
 };
 
 #endif
