@@ -11,6 +11,7 @@ using namespace std;
 
 class Client: public Person {
     private:
+        static const string FILENAME;
         static vector<Client> clients;
         static map<int, int> client_index;
     public:
@@ -24,14 +25,17 @@ class Client: public Person {
         string getType() {
             return "Client";
         }
+        string GetDetails() {
+            return getFullName() + "/n" +
+                getFullAddress() + "/n";
+        }
+
         //Public Static Members
         static vector<Client> GetAll();
         static Client Get(int id);
         static void AddClient(Client);
         static void UpdateClient(Client);
-        // static string GetDetails(int id);
-        string GetDetails();
-        
+        static void Save();
 };
 
 #endif

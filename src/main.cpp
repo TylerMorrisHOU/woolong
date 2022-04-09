@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     //Client Read In
-    vector<Client> clients;
+    //vector<Client> Client::clients;
     try
     {
         ifstream clientFile;
@@ -25,7 +25,8 @@ int main() {
                 ss >> id >> firstName >> lastName >> streetAddress1 >> streetAddress2 >> city >> state >> zipCode;
 
                 Client newClient(id, firstName, lastName, streetAddress1, streetAddress2, city, state, zipCode);
-                clients.push_back(newClient);
+                //clients.push_back(newClient);
+                Client::AddClient(newClient);
             }
             clientFile.close();
         } else {
@@ -35,8 +36,11 @@ int main() {
         cout << ex << endl;
     }
 
+    vector<Client> clients = Client::GetAll();
     for(int i = 0; i < clients.size(); i++) {
-        cout << clients.at(i).getType() << endl;
+        //cout << clients.at(i).getType() << endl;
+        Client c = clients.at(i);
+        cout << c.getFullName() << " - " << c.getShortAddress() << endl;
     }
 
     return 0;

@@ -21,6 +21,7 @@ class Person {
         string streetAddress1, string streetAddress2,
         string city, string state, string zipCode);
         virtual string getType() = 0;
+        
         //Setters
         void setFirstName(string fn) {
             firstName = fn;
@@ -43,6 +44,7 @@ class Person {
         void setZipCode(string zc) {
             zipCode = zc;
         }
+        
         //Getters
         string getFirstName() {
             return firstName;
