@@ -19,7 +19,8 @@ class Client: public Person {
         string city, string state, string zipCode)
             : Person{id, firstName, lastName, streetAddress1,
             streetAddress2, city, state, zipCode}
-            {}
+            {
+            }
         string getType() {
             return "Client";
         }
