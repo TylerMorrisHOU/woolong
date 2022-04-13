@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const string Client::FILENAME = "Clients.csv";
+const string Client::FILENAME = "db/Clients.csv";
 vector<Client> Client::clients;
 map<int, int> Client::client_index; //<id, vector_pos>
 int Client::auto_increment = 1; //next highest id
@@ -47,12 +47,12 @@ void Client::Load() {
     try
     {
         ifstream clientFile;
-        clientFile.open("./" + FILENAME);
+        clientFile.open("./" + FILENAME); //Relative to Project Root
         if(clientFile.is_open()) {
-            cout << "Client file is open..." << endl;
+            cout << "Client file is open for Load..." << endl;
             string line;
             while(getline(clientFile, line)) { //Comma-delimited file
-                cout << line << endl;
+                //cout << line << endl;
                 stringstream ss(line);
                 string word;
                 vector<string> words;
@@ -75,6 +75,7 @@ void Client::Load() {
                 //Insure that auto increment counter starts higher than anything in the CSV file
                 if(c.id >= auto_increment) auto_increment = c.id + 1;
             }
+            cout << "Client file successfully loaded, close file..." << endl;
             clientFile.close();
         } else {
             cout << "Could not open clients" << endl;
