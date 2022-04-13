@@ -49,19 +49,27 @@ void Client::Load() {
         ifstream clientFile;
         clientFile.open("./" + FILENAME);
         if(clientFile.is_open()) {
+            cout << "Client file is open..." << endl;
             string line;
             while(getline(clientFile, line)) { //Comma-delimited file
                 cout << line << endl;
                 stringstream ss(line);
                 string word;
-                while(getline(ss, word, ',')) {
-                    
-                }
-                int id;
-                string firstName, lastName, streetAddress1, streetAddress2, city, state, zipCode;
-                ss >> id >> firstName >> lastName >> streetAddress1 >> streetAddress2 >> city >> state >> zipCode;
+                vector<string> words;
 
-                Client c(id, firstName, lastName, streetAddress1, streetAddress2, city, state, zipCode);
+                while(getline(ss, word, ',')) {
+                    words.push_back(word);
+                }
+
+                ss << words.at(0);
+                int id;
+                ss >> id;
+                //string firstName = words.at(1);
+                //string lastName = words.at(2);
+                //streetAddress1, streetAddress2, city, state, zipCode;
+                //ss >> id >> firstName >> lastName >> streetAddress1 >> streetAddress2 >> city >> state >> zipCode;
+
+                Client c(id, words.at(1), words.at(2), words.at(3), words.at(4), words.at(5), words.at(6), words.at(7));
                 clients.push_back(c);
 
                 //Insure that auto increment counter starts higher than anything in the CSV file

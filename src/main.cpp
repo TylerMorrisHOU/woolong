@@ -1,5 +1,4 @@
 #include "Client.h"
-#include "SalesRep.h"
 
 #include <string>
 #include <vector>
@@ -8,7 +7,7 @@
 using namespace std;
 
 int main() {
-    //Client Read In
+    cout << "Client Read In" << endl;
     Client::Load();
     //vector<Client> Client::clients;
     
