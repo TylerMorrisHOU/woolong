@@ -14,6 +14,7 @@ class Client: public Person {
         static const string FILENAME;
         static vector<Client> clients;
         static map<int, int> client_index;
+        static int auto_increment;
     public:
         Client(int id, string firstName, string lastName,
         string streetAddress1, string streetAddress2,
@@ -33,8 +34,11 @@ class Client: public Person {
         //Public Static Members
         static vector<Client> GetAll();
         static Client Get(int id);
-        static void AddClient(Client);
+        static void AddClient(string fn, string ln, string sa1, string sa2, string cty, string st, string zc);
         static void UpdateClient(Client);
+
+        //Data Interaction
+        static void Load();
         static void Save();
 };
 
