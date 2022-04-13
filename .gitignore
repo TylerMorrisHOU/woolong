@@ -22,4 +22,4 @@
 *.app
 
 # DB files
-.db/*
+db/*
