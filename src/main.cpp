@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    //cout << "Client Read In" << endl;
+    cout << "Client Read In" << endl;
     Client::Load();
     //vector<Client> Client::clients;
     
@@ -20,8 +20,9 @@ int main() {
     }
 
     //Add a new Client
-    //Client::AddClient("Test", "Man", "123 Test St.", "", "Chicago", "IL", "98765");
+    Client::AddClient("Test", "Man", "123 Test St.", "", "Chicago", "IL", "98765");
     Client::Save();
 
+    cin.get();
     return 0;
 }

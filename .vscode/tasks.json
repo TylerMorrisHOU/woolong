@@ -7,10 +7,11 @@
 			"command": "C:\\msys64\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-fdiagnostics-color=always",
-				"-g",
-				"${file}",
+				"-ggdb",
+				"${workspaceFolder}\\src\\*.cpp",
+				"-I${workspaceFolder}\\include",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+				"${workspaceFolder}\\bin\\main"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
