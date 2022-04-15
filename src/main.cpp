@@ -23,6 +23,7 @@ int main() {
     Client::AddClient("Test", "Man", "123 Test St.", "", "Chicago", "IL", "98765");
     Client::Save();
 
+    cout << "Press any key to continue..." << endl;
     cin.get();
     return 0;
 }
