@@ -16,7 +16,8 @@ class Person {
         string state;
         string zipCode;
     public:
-        //Constructor
+        //Constructors
+        Person();
         Person(int id, string firstName, string lastName,
         string streetAddress1, string streetAddress2,
         string city, string state, string zipCode);
@@ -46,12 +47,31 @@ class Person {
         }
         
         //Getters
+        int getID() {
+            return id;
+        }
         string getFirstName() {
             return firstName;
         }
         string getLastName() {
             return lastName;
         }
+        string getStreetAddress1() {
+            return streetAddress1;
+        }
+        string getStreetAddress2() {
+            return streetAddress2;
+        }
+        string getCity() {
+            return city;
+        }
+        string getState() {
+            return state;
+        }
+        string getZipCode() {
+            return zipCode;
+        }
+
         string getFullName() {
             return firstName + " " + lastName;
         }

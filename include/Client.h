@@ -11,11 +11,12 @@ using namespace std;
 
 class Client: public Person {
     private:
-        static const string FILENAME;
-        static vector<Client> clients;
+        static const string CLIENT_FILE;
+        static vector<Client*> clients;
         static map<int, int> client_index;
         static int auto_increment;
     public:
+        Client():Person(){};
         Client(int id, string firstName, string lastName,
         string streetAddress1, string streetAddress2,
         string city, string state, string zipCode)
@@ -32,10 +33,10 @@ class Client: public Person {
         }
 
         //Public Static Members
-        static vector<Client> GetAll();
-        static Client Get(int id);
-        static void AddClient(string fn, string ln, string sa1, string sa2, string cty, string st, string zc);
-        static void UpdateClient(Client);
+        static vector<Client*> Get();
+        static Client* Get(int id);
+        static Client* AddNew(string fn, string ln, string sa1, string sa2, string cty, string st, string zc);
+        static void Update(Client* c);
 
         //Data Interaction
         static void Load();

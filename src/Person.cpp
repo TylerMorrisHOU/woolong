@@ -4,6 +4,18 @@
 
 using namespace std;
 
+//Default Constructor
+Person::Person() {
+    this->id = 0;
+    this->firstName = "";
+    this->lastName = "";
+    this->streetAddress1 = "";
+    this->streetAddress2 = "";
+    this->city = "";
+    this->state = "";
+    this->zipCode = "";
+}
+
 Person::Person(int id, string firstName, string lastName,
 string streetAddress1, string streetAddress2,
 string city, string state, string zipCode){
