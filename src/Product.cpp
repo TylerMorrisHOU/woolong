@@ -30,11 +30,11 @@ Product::Product(int id, string name, string description, int inventory) {
 }
 
 void Product::PrintShort() {
-
+    //TODO
 }
 
 void Product::PrintDetails() {
-
+    //TODO
 }
 
 vector<Product*> Product::Get() {
