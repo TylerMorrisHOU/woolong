@@ -96,7 +96,8 @@ void Client::Load() {
 void Client::Save() {
     try
     {
-        ofstream clientFile("./" + CLIENT_FILE, ios::trunc); //Truncate to Overwrite
+        ofstream clientFile;
+        clientFile.open("./" + CLIENT_FILE, ios::trunc); //Truncate to Overwrite
 
         if(clientFile.is_open()) {
             for(int i = 0; i < clients.size(); i++) {
