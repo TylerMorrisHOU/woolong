@@ -49,6 +49,11 @@ void Client::Update(Client* c) {
     clients.at(c_pos) = c;
 }
 
+void Client::PrintShort() {
+    Person::PrintShort();
+    //TODO: Sales to Date
+}
+
 void Client::Load() {
     try
     {

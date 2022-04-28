@@ -1,6 +1,7 @@
 #include "Person.h"
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -27,4 +28,16 @@ string city, string state, string zipCode){
     this->city = city;
     this->state = state;
     this->zipCode = zipCode;
+}
+
+void Person::PrintShort() {
+    cout << getFullName() << " - " << getShortAddress() << endl;
+}
+
+void Person::PrintDetails() {
+    cout << "First Name: " << getFirstName() << endl;
+    cout << "Last Name: " << getLastName() << endl;
+    cout << "Address: " << getStreetAddress1() << endl;
+    cout << "       : " << getStreetAddress2() << endl;
+    cout << "       : " << getCity() << ", " << getState() << " " << getZipCode() << endl;
 }

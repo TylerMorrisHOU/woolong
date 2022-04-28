@@ -12,6 +12,7 @@ class Product {
         int id;
         string name;
         string description;
+        float cost;
         int inventory;
 
         //Static
@@ -22,7 +23,7 @@ class Product {
 
     public:
         Product();
-        Product(int id, string name, string description, int inventory);
+        Product(int id, string name, string description, float cost, int inventory);
 
         //Getters
         int getID() {
@@ -35,6 +36,10 @@ class Product {
 
         string getDescription() {
             return description;
+        }
+
+        float getCost() {
+            return cost;
         }
 
         int getInventory() {
@@ -53,6 +58,10 @@ class Product {
             description = d;
         }
 
+        void setCost(float c) {
+            cost = c;
+        }
+
         void setInventory(int i) {
             inventory = i;
         }
@@ -60,7 +69,7 @@ class Product {
         //Public Static
         static vector<Product*> Get();
         static Product* Get(int id);
-        static Product* AddNew(string n, string d, int i);
+        static Product* AddNew(string n, string d, float c, int i);
         static void Update(Product* p);
 
         static void Load();

@@ -16,21 +16,20 @@ class Client: public Person {
         static map<int, int> client_index;
         static int auto_increment;
     public:
+        //Constructors
         Client():Person(){};
         Client(int id, string firstName, string lastName,
         string streetAddress1, string streetAddress2,
         string city, string state, string zipCode)
-            : Person{id, firstName, lastName, streetAddress1,
-            streetAddress2, city, state, zipCode}
-            {
-            }
+            : Person(id, firstName, lastName, streetAddress1,
+            streetAddress2, city, state, zipCode){}
+
         string getType() {
             return "Client";
         }
-        string GetDetails() {
-            return getFullName() + "/n" +
-                getFullAddress() + "/n";
-        }
+
+        void PrintShort();
+        //void PrintDetails();
 
         //Public Static Members
         static vector<Client*> Get();

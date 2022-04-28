@@ -19,22 +19,28 @@ Product::Product() {
     this->id = 0;
     this->name = "";
     this->description = "";
+    this->cost = 0.0;
     this->inventory = 0;
 }
 
-Product::Product(int id, string name, string description, int inventory) {
+Product::Product(int id, string name, string description, float cost, int inventory) {
     this->id = id;
     this->name = name;
     this->description = description;
+    this->cost = cost;
     this->inventory = inventory;
 }
 
 void Product::PrintShort() {
-    //TODO
+    //TODO: Plus Current Sales
+    cout << getName() << endl;
 }
 
 void Product::PrintDetails() {
-    //TODO
+    cout << "Product Name: " << getName() << endl;
+    cout << "Description: " << getDescription() << endl;
+    cout << "Cost: " << "$" << getCost() << endl;
+    cout << "Remaining Inventory: " << getInventory() << endl;
 }
 
 vector<Product*> Product::Get() {
@@ -47,11 +53,11 @@ Product* Product::Get(int id) {
 }
 
 
-Product* Product::AddNew(string n, string d, int i) {
+Product* Product::AddNew(string n, string d, float c, int i) {
     int p_pos = products.size();
 
     //Make Product
-    Product* p = new Product(auto_increment, n, d, i);
+    Product* p = new Product(auto_increment, n, d, c, i);
     products.push_back(p);
 
     //Auto Increment
@@ -89,11 +95,15 @@ void Product::Load() {
                 ss >> id;
 
                 ss << words.at(3);
+                float cost;
+                ss >> cost;
+
+                ss << words.at(4);
                 int inventory;
                 ss >> inventory;
 
                 Product* p = new Product(id, words.at(1), words.at(2),
-                    inventory);
+                    cost, inventory);
                 products.push_back(p);
 
                 if(id >= auto_increment)
@@ -119,9 +129,10 @@ void Product::Save() {
             for(int i = 0; i < products.size(); i++) {
                 Product* p = products.at(i);
 
-                productFile <<p->getID() << ","
+                productFile << p->getID() << ","
                     << p->getName() << ","
                     << p->getDescription() << ","
+                    << p->getCost() << ","
                     << p->getInventory() << endl;
             }
 

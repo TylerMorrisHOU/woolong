@@ -44,13 +44,13 @@ void SalesRep::Update(SalesRep* s) {
 }
 
 void SalesRep::PrintShort() {
-    cout << this->getFullName() << " - " << this->getShortAddress() << endl;
+    Person::PrintShort();
     //TODO: Sales To Date
 }
 
 void SalesRep::PrintDetails() {
-    cout << this->getFullName() << endl;
-    //TODO: Finish detailss
+    Person::PrintDetails();
+    //TODO: Monthly Sales
 }
 
 void SalesRep::Load() {

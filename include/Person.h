@@ -86,6 +86,10 @@ class Person {
         string getShortAddress() {
             return city + ", " + state;
         }
+
+        //Printers
+        void PrintShort();
+        void PrintDetails();
 };
 
 #endif
