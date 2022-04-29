@@ -140,8 +140,9 @@ int main() {
 		salesByClient.at(i)->Print();
 	}
 
-	//4e) Update specific Sale
-	//TODO
+	//4e) Update specific Sale -- Double it
+	s->setAmountSold(s->getAmountSold() * 2);
+	Sale::Update(s);
 
 	//4f) Save Sales File
 	Sale::Save();
