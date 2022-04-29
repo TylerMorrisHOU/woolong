@@ -25,7 +25,7 @@ class Sale {
         //Constructors
         Sale();
         Sale(int id, int clientId, int repId, int productId,
-            int amountSold, float costPerUnit, float saleTotal);
+            int amountSold, float saleTotal);
 
         //Setters
         void setClientId(int id) {
@@ -57,8 +57,24 @@ class Sale {
         int getProductId() {
             return productId;
         }
+        int getAmountSold() {
+            return amountSold;
+        }
+        float getSaleTotal() {
+            return saleTotal;
+        }
 
+        void Print();
 
+        //Static Functions
+        static vector<Sale*> Get();
+        static vector<Sale*> GetByClient(int clientId);
+        static Sale* Get(int id);
+        static Sale* Purchase(int clientId, int salesRepId, int productId, int amountSold);
+        static void Update(Sale* s);
+
+        static void Load();
+        static void Save();
 };
 
 #endif

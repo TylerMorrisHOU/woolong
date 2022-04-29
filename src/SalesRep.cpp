@@ -61,6 +61,8 @@ void SalesRep::Load() {
             cout << "Sales Rep file is open for Load..." << endl;
 
             string line;
+            int count = 0;
+
             while(getline(salesRepFile, line)) {
                 stringstream ss(line);
                 string word;
@@ -72,12 +74,15 @@ void SalesRep::Load() {
                 }
 
                 //String->Int conversion
-                ss << words.at(0);
+                //ss << words.at(0);
                 int id;
-                ss >> id;
+                //ss >> id;
+                id = stoi(words.at(0));
 
                 SalesRep* s = new SalesRep(id, words.at(1), words.at(2), words.at(3), words.at(4), words.at(5), words.at(6), words.at(7));
                 salesReps.push_back(s);
+                salesRep_index.insert(pair<int, int>(id, count));
+                count++;
 
                 //Set auto increment
                 if(id >= auto_increment)

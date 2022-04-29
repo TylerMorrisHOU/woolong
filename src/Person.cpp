@@ -31,13 +31,14 @@ string city, string state, string zipCode){
 }
 
 void Person::PrintShort() {
-    cout << getFullName() << " - " << getShortAddress() << endl;
+    cout <<"(" << id << "): " << getFullName() << " - " << getShortAddress() << endl;
 }
 
 void Person::PrintDetails() {
-    cout << "First Name: " << getFirstName() << endl;
-    cout << "Last Name: " << getLastName() << endl;
-    cout << "Address: " << getStreetAddress1() << endl;
-    cout << "       : " << getStreetAddress2() << endl;
-    cout << "       : " << getCity() << ", " << getState() << " " << getZipCode() << endl;
+    cout << "ID: " << id << endl;
+    cout << "First Name: " << firstName << endl;
+    cout << "Last Name: " << lastName << endl;
+    cout << "Address: " << streetAddress1 << endl;
+    cout << "       : " << streetAddress2 << endl;
+    cout << "       : " << city << ", " << state << " " << zipCode << endl;
 }

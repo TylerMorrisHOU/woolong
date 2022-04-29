@@ -20,15 +20,13 @@ Product::Product() {
     this->name = "";
     this->description = "";
     this->cost = 0.0;
-    this->inventory = 0;
 }
 
-Product::Product(int id, string name, string description, float cost, int inventory) {
+Product::Product(int id, string name, string description, float cost) {
     this->id = id;
     this->name = name;
     this->description = description;
     this->cost = cost;
-    this->inventory = inventory;
 }
 
 void Product::PrintShort() {
@@ -40,7 +38,6 @@ void Product::PrintDetails() {
     cout << "Product Name: " << getName() << endl;
     cout << "Description: " << getDescription() << endl;
     cout << "Cost: " << "$" << getCost() << endl;
-    cout << "Remaining Inventory: " << getInventory() << endl;
 }
 
 vector<Product*> Product::Get() {
@@ -53,11 +50,11 @@ Product* Product::Get(int id) {
 }
 
 
-Product* Product::AddNew(string n, string d, float c, int i) {
+Product* Product::AddNew(string n, string d, float c) {
     int p_pos = products.size();
 
     //Make Product
-    Product* p = new Product(auto_increment, n, d, c, i);
+    Product* p = new Product(auto_increment, n, d, c);
     products.push_back(p);
 
     //Auto Increment
@@ -81,6 +78,8 @@ void Product::Load() {
             cout << "Proudct file is open for Load..." << endl;
 
             string line;
+            int count = 0;
+
             while(getline(productFile, line)) {
                 stringstream ss(line);
                 string word;
@@ -90,27 +89,26 @@ void Product::Load() {
                     words.push_back(word);
                 }
 
-                ss << words.at(0);
+                // ss << words.at(0);
                 int id;
-                ss >> id;
+                // ss >> id;
+                id = stoi(words.at(0));
 
-                ss << words.at(3);
+                // ss << words.at(3);
                 float cost;
-                ss >> cost;
+                // ss >> cost;
+                cost = stof(words.at(3));
 
-                ss << words.at(4);
-                int inventory;
-                ss >> inventory;
-
-                Product* p = new Product(id, words.at(1), words.at(2),
-                    cost, inventory);
+                Product* p = new Product(id, words.at(1), words.at(2), cost);
                 products.push_back(p);
+                product_index.insert(pair<int, int>(id, count));
+                count++;
 
                 if(id >= auto_increment)
                     auto_increment = id + 1;
             }
 
-            cout << "ProductFiel successfully loaded. Closing file..." << endl;
+            cout << "Product File successfully loaded. Closing file..." << endl;
             productFile.close();
         } else {
             cout << "Could not open products!" << endl;
@@ -132,8 +130,7 @@ void Product::Save() {
                 productFile << p->getID() << ","
                     << p->getName() << ","
                     << p->getDescription() << ","
-                    << p->getCost() << ","
-                    << p->getInventory() << endl;
+                    << p->getCost() << endl;
             }
 
             productFile.close();

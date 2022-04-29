@@ -45,7 +45,7 @@ Client* Client::AddNew(string fn, string ln, string sa1, string sa2, string cty,
 
 void Client::Update(Client* c) {
     //c = Client::Get(c.id);
-    int c_pos = client_index.find(c->getID())->second;
+    auto c_pos = client_index.find(c->getID())->second;
     clients.at(c_pos) = c;
 }
 
@@ -62,6 +62,7 @@ void Client::Load() {
         if(clientFile.is_open()) {
             cout << "Client file is open for Load..." << endl;
             string line;
+            int count = 0;
             while(getline(clientFile, line)) { //Comma-delimited file
                 //cout << line << endl;
                 stringstream ss(line);
@@ -69,12 +70,15 @@ void Client::Load() {
                 vector<string> words;
 
                 while(getline(ss, word, ',')) {
+                    //cout << word << endl;
                     words.push_back(word);
                 }
 
-                ss << words.at(0);
+                // ss << words.at(0);
                 int id;
-                ss >> id;
+                // ss >> id;
+                id = stoi(words.at(0));
+                // cout << "Loading Client Id " << id << "..." << endl;
                 //string firstName = words.at(1);
                 //string lastName = words.at(2);
                 //streetAddress1, streetAddress2, city, state, zipCode;
@@ -82,9 +86,11 @@ void Client::Load() {
 
                 Client* c = new Client(id, words.at(1), words.at(2), words.at(3), words.at(4), words.at(5), words.at(6), words.at(7));
                 clients.push_back(c);
+                client_index.insert(pair<int, int>(id, count));
+                count++;
 
                 //Insure that auto increment counter starts higher than anything in the CSV file
-                id = c->getID();
+                //id = c->getID();
                 if(id >= auto_increment)
                     auto_increment = id + 1;
             }

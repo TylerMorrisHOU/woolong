@@ -13,7 +13,6 @@ class Product {
         string name;
         string description;
         float cost;
-        int inventory;
 
         //Static
         static const string PRODUCT_FILE;
@@ -23,7 +22,7 @@ class Product {
 
     public:
         Product();
-        Product(int id, string name, string description, float cost, int inventory);
+        Product(int id, string name, string description, float cost);
 
         //Getters
         int getID() {
@@ -42,10 +41,6 @@ class Product {
             return cost;
         }
 
-        int getInventory() {
-            return inventory;
-        }
-
         void PrintShort();
         void PrintDetails();
 
@@ -62,14 +57,10 @@ class Product {
             cost = c;
         }
 
-        void setInventory(int i) {
-            inventory = i;
-        }
-
         //Public Static
         static vector<Product*> Get();
         static Product* Get(int id);
-        static Product* AddNew(string n, string d, float c, int i);
+        static Product* AddNew(string n, string d, float c);
         static void Update(Product* p);
 
         static void Load();
