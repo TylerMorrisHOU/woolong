@@ -4,6 +4,8 @@
 #include "Product.h"
 
 #include <string>
+// #include <ctime>
+
 #include <vector>
 #include <map>
 #include <algorithm>
@@ -26,15 +28,17 @@ Sale::Sale() {
     this->productId = 0;
     this->amountSold = 0;
     this->saleTotal = 0.0;
+    this->monthSold = (rand() % 12) + 1;
 }
 
-Sale::Sale(int id, int clientId, int salesRepId, int productId, int amountSold, float saleTotal) {
+Sale::Sale(int id, int clientId, int salesRepId, int productId, int amountSold, float saleTotal, int monthSold) {
     this->id = id;
     this->clientId = clientId;
     this->salesRepId = salesRepId;
     this->productId = productId;
     this->amountSold = amountSold;
     this->saleTotal = saleTotal;
+    this->monthSold = monthSold;    
 }
 
 void Sale::Print() {
@@ -48,10 +52,12 @@ void Sale::Print() {
     std::cout << "Product Sold: " << product->getName() << endl;
 
     std::cout << "Number Sold: " << amountSold << endl;
+    cout.precision(2);
+    std::cout << "Price per Unit: " << fixed << product->getCost() << endl;
 
-    std::cout << "Price per Unit: " << product->getCost() << endl;
+    std::cout << "Total Sale (in dollars): " << fixed << saleTotal << endl;
 
-    std::cout << "Total Sale (in dollars): " << saleTotal << endl;
+    cout << endl;
 }
 
 //Static Implementation
@@ -67,12 +73,39 @@ vector<Sale*> Sale::GetByClient(int clientId) {
     return clientSales;
 }
 
+vector<Sale*> Sale::GetByProduct(int productId) {
+    vector<Sale*> productSales;
+    copy_if(sales.begin(), sales.end(), back_inserter(productSales), [productId](Sale* s) {
+        return s->getProductId() == productId;
+    });
+
+    return productSales;
+}
+
+vector<Sale*> Sale::GetBySalesRep(int salesRepId) {
+    vector<Sale*> repSales;
+    copy_if(sales.begin(), sales.end(), back_inserter(repSales), [salesRepId](Sale* s) {
+        return s->getSalesRepId() == salesRepId;
+    });
+
+    return repSales;
+}
+
+vector<Sale*> Sale::GetByMonth(int month) {
+    vector<Sale*> monthlySales;
+    copy_if(sales.begin(), sales.end(), back_inserter(monthlySales), [month](Sale* s) {
+        return s->getMonthSold() == month;
+    });
+
+    return monthlySales;
+}
+
 Sale* Sale::Get(int id) {
     auto result = sales_index.find(id);
     return sales.at(result->second);
 }
 
-Sale* Sale::Purchase(int clientId, int salesRepId, int productId, int amountSold) {
+Sale* Sale::Purchase(int clientId, int salesRepId, int productId, int amountSold, int monthSold) {
     int s_pos = sales.size();
 
     //Get Cost per Unit (from Product)
@@ -80,7 +113,7 @@ Sale* Sale::Purchase(int clientId, int salesRepId, int productId, int amountSold
     //Get Total Cost
     float total = costPerUnit * amountSold;
     //Make Sale
-    Sale* s = new Sale(auto_increment, clientId, salesRepId, productId, amountSold, total);
+    Sale* s = new Sale(auto_increment, clientId, salesRepId, productId, amountSold, total, monthSold);
     sales.push_back(s);
 
     auto_increment++;
@@ -145,7 +178,10 @@ void Sale::Load() {
                 // ss >> saleTotal;
                 saleTotal = stof(words.at(5));
 
-                Sale* s = new Sale(id, clientId, salesRepId, productId, amountSold, saleTotal);
+                int monthSold;
+                monthSold = stoi(words.at(6));
+
+                Sale* s = new Sale(id, clientId, salesRepId, productId, amountSold, saleTotal, monthSold);
                 sales.push_back(s);
                 sales_index.insert(pair<int, int>(id, count));
                 count++;
@@ -178,7 +214,8 @@ void Sale::Save() {
                     << s->getSalesRepId() << ","
                     << s->getProductId() << ","
                     << s->getAmountSold() << ","
-                    << s->getSaleTotal() << endl;
+                    << s->getSaleTotal() << ","
+                    << s->getMonthSold() << endl;
             }
 
             salesFile.close();

@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "Sale.h"
 
 #include <string>
 #include <vector>
@@ -50,8 +51,14 @@ void Client::Update(Client* c) {
 }
 
 void Client::PrintShort() {
-    Person::PrintShort();
-    //TODO: Sales to Date
+    float totalClientSales = 0.0;
+    vector<Sale*> clientSales = Sale::GetByClient(getID());
+
+    for(auto it = clientSales.begin(); it != clientSales.end(); ++it)
+        totalClientSales += (*it)->getSaleTotal();
+
+    cout.precision(2);
+    cout <<"(" << getID() << "): " << getFullName() << " - " << getShortAddress() << " - $" << fixed << totalClientSales << " in total sales" << endl;
 }
 
 void Client::Load() {
@@ -78,7 +85,7 @@ void Client::Load() {
                 int id;
                 // ss >> id;
                 id = stoi(words.at(0));
-                // cout << "Loading Client Id " << id << "..." << endl;
+                //cout << "Loading Client Id " << id << "..." << endl;
                 //string firstName = words.at(1);
                 //string lastName = words.at(2);
                 //streetAddress1, streetAddress2, city, state, zipCode;
@@ -93,6 +100,8 @@ void Client::Load() {
                 //id = c->getID();
                 if(id >= auto_increment)
                     auto_increment = id + 1;
+
+                words.clear();
             }
             cout << "Client file successfully loaded, close file..." << endl;
             clientFile.close();

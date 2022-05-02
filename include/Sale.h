@@ -2,6 +2,8 @@
 #define SALES_H
 
 #include <string>
+// #include <ctime>
+
 #include <vector>
 #include <map>
 
@@ -16,6 +18,8 @@ class Sale {
         int amountSold;
         //float costPerUnit;
         float saleTotal;
+        int monthSold;
+
         //Static
         static const string SALES_FILE;
         static vector<Sale*> sales;
@@ -25,7 +29,7 @@ class Sale {
         //Constructors
         Sale();
         Sale(int id, int clientId, int repId, int productId,
-            int amountSold, float saleTotal);
+            int amountSold, float saleTotal, int monthSold);
 
         //Setters
         void setClientId(int id) {
@@ -63,14 +67,21 @@ class Sale {
         float getSaleTotal() {
             return saleTotal;
         }
+        int getMonthSold() {
+            return monthSold;
+        }
 
         void Print();
 
         //Static Functions
         static vector<Sale*> Get();
         static vector<Sale*> GetByClient(int clientId);
+        static vector<Sale*> GetByProduct(int productId);
+        static vector<Sale*> GetBySalesRep(int salesRepId);
+        static vector<Sale*> GetByMonth(int month);
+
         static Sale* Get(int id);
-        static Sale* Purchase(int clientId, int salesRepId, int productId, int amountSold);
+        static Sale* Purchase(int clientId, int salesRepId, int productId, int amountSold, int monthSold);
         static void Update(Sale* s);
 
         static void Load();

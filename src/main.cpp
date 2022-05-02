@@ -6,10 +6,13 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <iomanip> // Learned from ZyBooks!
+#include <ctime>
 
 using namespace std;
 
 int main() {
+	srand(time(0));
 	// ----- LOAD ALL CSVs UPFRONT FOR AVAILABILITY
 	//1a) Read client information from a file
 	cout << "Reading in Files..." << endl;
@@ -25,11 +28,14 @@ int main() {
 	cout << endl;
 
 	// ----- Client Section -----
-	
+	cout << "----- Client Functions -----" << endl;
+	cout << endl;
+
 	//Print out Client Information
+	cout << "----- Listing out current clients..." << endl;
 	//1b) List all current clients - name, short address, sales to date
 	for(int i = 0; i < Client::Get().size(); i++) {
-		Client::Get(i)->PrintShort();
+		Client::Get().at(i)->PrintShort();
 	}
 	cout << "Press any key to continue..." << endl;
 	cin.get();
@@ -43,6 +49,7 @@ int main() {
 	cout << endl;
 
 	//1e) Update a Client
+	c->setFirstName(c->getFirstName() + " #" + to_string(Client::Get().size()));
 	c->setCity("Miwaukee");
 	c->setState("WI");
 	Client::Update(c);
@@ -61,7 +68,7 @@ int main() {
 
 	//2b) List all your current salesReps - name, short address, sales to date
 	for(int i = 0; i < SalesRep::Get().size(); i++) {
-		SalesRep::Get(i)->PrintShort();
+		SalesRep::Get().at(i)->PrintShort();
 	}
 
 	//2d) Add a new salesRep
@@ -72,7 +79,7 @@ int main() {
 
 	//2e) Update Sales Rep Information
 	r->setFirstName("Super");
-	r->setLastName("Man");
+	r->setLastName("Man #" + to_string(SalesRep::Get().size()));
 	SalesRep::Update(r);
 	//Print to Confirm
 	r->PrintDetails();
@@ -85,13 +92,14 @@ int main() {
 	cout << endl;
 
 	// ----- Product Section -----
-
-	
+	cout << "----- Product Functions -----" << endl;
+	cout << endl;
 
 	//3b) List current Products
-	//TODO: Including current sales
+	cout << "----- Listing out current products..." << endl;
+	//Including current sales
 	for(int i = 0; i < Product::Get().size(); i++) {
-		Product::Get(i)->PrintShort();
+		Product::Get().at(i)->PrintShort();
 	}
 	cout << endl;
 
@@ -103,13 +111,10 @@ int main() {
 	cout << endl;
 
 	//3e) Update a Product
-	p->setName("Lots more Cookies");
+	p->setName("Cookie #" + to_string(Product::Get().size()));
 	Product::Update(p);
 	//Print to Test
 	p->PrintDetails();
-
-	//3f) Montly Sales Report of a Product
-	//TODO
 
 	//3g) Save to a file
 	Product::Save();
@@ -120,17 +125,23 @@ int main() {
 	// ----- Sales Functions -----
 
 	//4c) List all Sales for the year
-	cout << "How many Sales? " << Sale::Get().size() << endl;
+	cout << "How many Sales? -- " << Sale::Get().size() << endl;
 	for(int i = 0; i < Sale::Get().size(); i++) {
-		Sale::Get(i)->Print();
+		Sale::Get().at(i)->Print();
 	}
 	cout << endl;
 
 	//4b) Purchase a Product, Make a Sale
-	cout << "Trying to make a purchase..." << endl;
-	Sale* s = Sale::Purchase(c->getID(), r->getID(), p->getID(), 2);
-	cout << "Sale successful!" << endl;
-	cout << endl;
+	cout << "Trying to make 3 purchases..." << endl;
+	// Sale* s;
+
+	for(int i = 0; i < 3; i++) {
+		int amountSold = (rand() % 20) + 1;
+		int monthSold = (rand() % 12) + 1;
+		Sale::Purchase(c->getID(), r->getID(), p->getID(), amountSold, monthSold);
+		cout << "Sale successful!" << endl;
+		cout << endl;
+	}
 
 	//4d) List all Sales for the year, specific client
 	vector<Sale*> salesByClient = Sale::GetByClient(c->getID());
@@ -140,9 +151,38 @@ int main() {
 		salesByClient.at(i)->Print();
 	}
 
-	//4e) Update specific Sale -- Double it
+	//4e) Update random Sale -- Double it
+	Sale* s = Sale::Get().at((rand() % Sale::Get().size()));
 	s->setAmountSold(s->getAmountSold() * 2);
 	Sale::Update(s);
+	cout << endl;
+
+	//Monthly Sales Report
+	vector<float> monthlySalesNumbers;
+	for(int i = 1; i <= 12; i++) {
+		vector<Sale*> monthlySales = Sale::GetByMonth(i);
+		float totalMonthlySales = 0.0;
+
+		for(auto it = monthlySales.begin(); it != monthlySales.end(); ++it)
+			totalMonthlySales += (*it)->getSaleTotal();
+
+		monthlySalesNumbers.push_back(totalMonthlySales);
+	}
+
+	cout << "---------- Monthly Sales Report ----------" << endl;
+	cout.precision(2);
+	cout << right << setw(20) << setfill(' ') << "January" << " | $" << left << fixed << monthlySalesNumbers.at(0) << endl;
+	cout << right << setw(20) << setfill(' ') << "Februrary" << " | $" << left << fixed << monthlySalesNumbers.at(1) << endl;
+	cout << right << setw(20) << setfill(' ') << "March" << " | $" << left << fixed << monthlySalesNumbers.at(2) << endl;
+	cout << right << setw(20) << setfill(' ') << "April" << " | $" << left << fixed << monthlySalesNumbers.at(3) << endl;
+	cout << right << setw(20) << setfill(' ') << "May" << " | $" << left << fixed << monthlySalesNumbers.at(4) << endl;
+	cout << right << setw(20) << setfill(' ') << "June" << " | $" << left << fixed << monthlySalesNumbers.at(5) << endl;
+	cout << right << setw(20) << setfill(' ') << "July" << " | $" << left << fixed << monthlySalesNumbers.at(6) << endl;
+	cout << right << setw(20) << setfill(' ') << "August" << " | $" << left << fixed << monthlySalesNumbers.at(7) << endl;
+	cout << right << setw(20) << setfill(' ') << "September" << " | $" << left << fixed << monthlySalesNumbers.at(8) << endl;
+	cout << right << setw(20) << setfill(' ') << "October" << " | $" << left << fixed << monthlySalesNumbers.at(9) << endl;
+	cout << right << setw(20) << setfill(' ') << "November" << " | $" << left << fixed << monthlySalesNumbers.at(10) << endl;
+	cout << right << setw(20) << setfill(' ') << "December" << " | $" << left << fixed << monthlySalesNumbers.at(11) << endl;
 
 	//4f) Save Sales File
 	Sale::Save();
