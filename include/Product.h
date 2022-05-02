@@ -43,6 +43,7 @@ class Product {
 
         void PrintShort();
         void PrintDetails();
+        void PrintSalesReport();
 
         //Setters
         void setName(string n) {

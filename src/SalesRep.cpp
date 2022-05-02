@@ -1,4 +1,5 @@
 #include "SalesRep.h"
+#include "Sale.h"
 
 #include <string>
 #include <vector>
@@ -44,13 +45,18 @@ void SalesRep::Update(SalesRep* s) {
 }
 
 void SalesRep::PrintShort() {
-    Person::PrintShort();
-    //TODO: Sales To Date
+    float totalRepSales = 0.0;
+    vector<Sale*> repSales = Sale::GetBySalesRep(getID());
+
+    for(auto it = repSales.begin(); it != repSales.end(); ++it)
+        totalRepSales += (*it)->getSaleTotal();
+
+    cout.precision(2);
+    cout <<"(" << getID() << "): " << getFullName() << " - " << getShortAddress() << " - $" << fixed << totalRepSales << " in total sales" << endl;
 }
 
 void SalesRep::PrintDetails() {
     Person::PrintDetails();
-    //TODO: Monthly Sales
 }
 
 void SalesRep::Load() {

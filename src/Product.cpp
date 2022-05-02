@@ -1,4 +1,5 @@
 #include "Product.h"
+#include "Sale.h"
 
 #include <string>
 #include <vector>
@@ -30,14 +31,22 @@ Product::Product(int id, string name, string description, float cost) {
 }
 
 void Product::PrintShort() {
-    //TODO: Plus Current Sales
-    cout << getName() << endl;
+    //Including Current Sales
+    float totalProductSales = 0.0;
+    vector<Sale*> productSales = Sale::GetByProduct(getID());
+
+    for(auto it = productSales.begin(); it != productSales.end(); ++it)
+        totalProductSales += (*it)->getSaleTotal();
+    
+    cout.precision(2);
+    cout << "(" << getID() << ") - " << getName() << " - $" << fixed << totalProductSales << " in sales" << endl;
 }
 
 void Product::PrintDetails() {
     cout << "Product Name: " << getName() << endl;
     cout << "Description: " << getDescription() << endl;
-    cout << "Cost: " << "$" << getCost() << endl;
+    cout.precision(2);
+    cout << "Cost: " << "$" << fixed << getCost() << endl;
 }
 
 vector<Product*> Product::Get() {
@@ -48,7 +57,6 @@ Product* Product::Get(int id) {
     auto result = product_index.find(id);
     return products.at(result->second);
 }
-
 
 Product* Product::AddNew(string n, string d, float c) {
     int p_pos = products.size();
